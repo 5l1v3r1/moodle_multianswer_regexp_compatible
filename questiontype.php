@@ -287,7 +287,7 @@ define('ANSWER_TYPE_DEF_REGEX',
         '(SHORTANSWER|SA|MW)|(SHORTANSWER_C|SAC|MWC)|' .        
         '(MULTICHOICE_S|MCS)|(MULTICHOICE_VS|MCVS)|(MULTICHOICE_HS|MCHS)|'.
         '(MULTIRESPONSE|MR)|(MULTIRESPONSE_H|MRH)|(MULTIRESPONSE_S|MRS)|(MULTIRESPONSE_HS|MRHS)|'.
-        '(REGEXP|RX)');
+        '(REGEXP|RX)|(REGEXP_C|RXC)');
 define('ANSWER_START_REGEX',
        '\{([0-9]*):(' . ANSWER_TYPE_DEF_REGEX . '):');
 
@@ -313,8 +313,9 @@ define('ANSWER_REGEX_ANSWER_TYPE_MULTIRESPONSE', 12);
 define('ANSWER_REGEX_ANSWER_TYPE_MULTIRESPONSE_HORIZONTAL', 13);
 define('ANSWER_REGEX_ANSWER_TYPE_MULTIRESPONSE_SHUFFLED', 14);
 define('ANSWER_REGEX_ANSWER_TYPE_MULTIRESPONSE_HORIZONTAL_SHUFFLED', 15);
-define('ANSWER_REGEX_ALTERNATIVES', 17);
+define('ANSWER_REGEX_ALTERNATIVES', 18);
 define('ANSWER_REGEX_ANSWER_TYPE_REGEXP', 16);
+define('ANSWER_REGEX_ANSWER_TYPE_REGEXP_C', 17);
 
 /**
  * Initialise subquestion fields that are constant across all MULTICHOICE
@@ -423,6 +424,9 @@ function qtype_multianswer_extract_question($text) {
         } else if (!empty($answerregs[ANSWER_REGEX_ANSWER_TYPE_REGEXP])) {
             $wrapped->qtype = 'regexp';
             $wrapped->usecase = 0;
+        } else if (!empty($answerregs[ANSWER_REGEX_ANSWER_TYPE_REGEXP_C])) {
+            $wrapped->qtype = 'regexp';
+            $wrapped->usecase = 1;
         } else {
             print_error('unknownquestiontype', 'question', '', $answerregs[2]);
             return false;
